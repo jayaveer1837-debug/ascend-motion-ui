@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const courses = [
   { name: "Full Stack Development", href: "#courses" },
@@ -44,13 +45,8 @@ export const Navbar = () => {
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-            <span className="text-primary-foreground font-display font-bold text-xl">T</span>
-          </div>
-          <span className="font-display font-bold text-xl text-primary">
-            TechVarsity
-          </span>
+        <a href="#" className="flex items-center">
+          <img src={logo} alt="Academy of Tech Masters" className="h-10 md:h-12" />
         </a>
 
         {/* Desktop Navigation */}
