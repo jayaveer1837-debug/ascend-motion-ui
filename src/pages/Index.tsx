@@ -1,12 +1,10 @@
-import { TopBar } from "@/components/TopBar";
-import { Navbar } from "@/components/Navbar";
+import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
-      <TopBar />
-      <Navbar />
+      <Header />
       <HeroSection />
     </div>
   );
