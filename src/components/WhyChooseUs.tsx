@@ -44,6 +44,58 @@ const features = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 40, scale: 0.9 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+
+const iconVariants = {
+  initial: { scale: 1, rotate: 0 },
+  hover: {
+    scale: 1.15,
+    rotate: 360,
+    transition: {
+      duration: 0.6,
+      ease: "easeInOut",
+    },
+  },
+};
+
+const cardVariants = {
+  initial: {
+    backgroundColor: "rgb(255, 255, 255)",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+  },
+  hover: {
+    backgroundColor: "rgb(255, 255, 255)",
+    boxShadow: "0 20px 25px rgba(0, 0, 0, 0.1)",
+    y: -10,
+    transition: {
+      duration: 0.3,
+      ease: "easeOut",
+    },
+  },
+};
+
 export const WhyChooseUs = () => {
   return (
     <section className="py-16 md:py-24 bg-background relative overflow-hidden">
@@ -52,65 +104,116 @@ export const WhyChooseUs = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
-            <span className="text-foreground">Why </span>
-            <span className="text-primary">Choose </span>
-            <span className="text-foreground">Us</span>
-          </h2>
-          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
+              <span className="text-foreground">Why </span>
+              <motion.span
+                className="text-primary inline-block"
+                whileInView={{ scale: 1.05 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                Choose
+              </motion.span>
+              <span className="text-foreground"> Us</span>
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
             Your success is our mission. Here's what makes us different
-          </p>
+          </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feature, index) => {
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {features.map((feature) => {
             const IconComponent = feature.icon;
             return (
               <motion.div
                 key={feature.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                className="group bg-card border border-border rounded-2xl p-6 hover:shadow-xl hover:border-primary/30 transition-all duration-300"
+                variants={itemVariants}
+                whileHover="hover"
+                initial="initial"
+                className="group"
               >
                 <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
+                  variants={cardVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  className="bg-card border border-border rounded-2xl p-6 h-full hover:border-primary/30 transition-all duration-300 cursor-pointer"
                 >
-                  <IconComponent className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  <motion.div
+                    variants={iconVariants}
+                    initial="initial"
+                    whileHover="hover"
+                    className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:shadow-lg group-hover:shadow-primary/30 transition-all duration-300"
+                  >
+                    <IconComponent className="w-7 h-7 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
+                  </motion.div>
+
+                  <motion.h3
+                    className="text-lg font-bold text-foreground mb-2"
+                    whileHover={{ color: "hsl(214, 85%, 30%)" }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {feature.title}
+                  </motion.h3>
+
+                  <motion.p
+                    initial={{ opacity: 0.8 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-muted-foreground leading-relaxed"
+                  >
+                    {feature.description}
+                  </motion.p>
                 </motion.div>
-
-                <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                  {feature.title}
-                </h3>
-
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </p>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="text-center mt-12"
+          transition={{ duration: 0.5, delay: 0.9 }}
+          className="text-center mt-16"
         >
-          <p className="text-sm text-muted-foreground mb-6">
-            Join <span className="font-bold text-accent">2000+</span> students who transformed their careers with us
-          </p>
+          <motion.p
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1 }}
+            className="text-sm text-muted-foreground mb-6"
+          >
+            Join <motion.span
+              className="font-bold text-accent inline-block"
+              whileInView={{ scale: 1.2 }}
+              transition={{ duration: 0.4, delay: 1.2 }}
+            >
+              2000+
+            </motion.span> students who transformed their careers with us
+          </motion.p>
         </motion.div>
       </div>
     </section>
